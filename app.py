@@ -21,14 +21,14 @@ def login():
             password = request.form.get('password')
             if (not username) or (not password):
                 return render_template('error.html')
+
             try:
 
                 cursor.execute("SELECT * FROM service.users WHERE login=%s AND password=%s", (str(username), str(password)))
-                records = list(cursor.fetchall())
+                records = cursor.fetchone()[0]
             except TypeError:
-                return render_template("noteexist.htnml")
-
-            return render_template('account.html', full_name=records[0][1])
+                return render_template("er.html")
+            return render_template('account.html', full_name=records)
 
         elif request.form.get("registration"):
             return redirect("/registration/")
