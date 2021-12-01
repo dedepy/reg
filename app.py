@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 conn = psycopg2.connect(database="service",
                         user="postgres",
-                        password="123",
+                        password="123456",
                         host="localhost",
                         port="5432")
 cursor = conn.cursor()
@@ -25,7 +25,7 @@ def login():
             try:
 
                 cursor.execute("SELECT * FROM service.users WHERE login=%s AND password=%s", (str(username), str(password)))
-                records = cursor.fetchone()[0]
+                records = cursor.fetchone()[1]
             except TypeError:
                 return render_template("er.html")
             return render_template('account.html', full_name=records)
